@@ -15,11 +15,18 @@ public class PlayerInAirState : PlayerState
     public override void Update()
     {
         base.Update();
+
+        if (!player.CheckIfGrounded() || player.currentMovement.y > 0)
+        {
+            player.currentMovement.y += player.gravity;
+            
+            player.characterController.Move(player.currentMovement * Time.deltaTime);
+        }
         
-        float previousYVelocity = player.currentMovement.y;
-        float newYVelocity = player.currentMovement.y + (player.gravity * player.fallMultiplier * Time.deltaTime);
-        float nextYVelocity = (previousYVelocity + newYVelocity) * .5f;
-        player.currentMovement.y = nextYVelocity;
+        if (player.CheckIfGrounded())
+        {
+            stateMachine.ChangeState(player.idleState);
+        }
     }
 
     public override void Exit()

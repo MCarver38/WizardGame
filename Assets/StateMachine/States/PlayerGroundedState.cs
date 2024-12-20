@@ -28,6 +28,11 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.fallingState);
         }
+        
+        if (player.isJumpPressed)
+        {
+            stateMachine.ChangeState(player.jumpingState);
+        }
     }
 
     public override void Exit()

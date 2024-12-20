@@ -22,14 +22,11 @@ public class Player : MonoBehaviour
     
     // Jumping variables
     public bool isJumpPressed = false;
-    public float initialJumpVelocity;
-    private const float maxJumpHeight = 0.5f;
-    private const float maxJumpTime = 0.5f;
+    public float jumpForce = 2f;
     
     // Gravity variables
     public float groundedGravity = -.05f;
     public float gravity = -9.8f;
-    public float fallMultiplier = 1.75f;
 
     // Speed variables
     public float movementSpeed = 7f;
@@ -52,8 +49,6 @@ public class Player : MonoBehaviour
         // Set reference to variables
         playerInput = new InputSystem_Actions();
         characterController = GetComponent<CharacterController>();
-        
-        setupJumpVariables();
     }
 
     private void Start()
@@ -69,19 +64,10 @@ public class Player : MonoBehaviour
         
         Debug.Log(CheckIfGrounded());
     }
-    
-    private void setupJumpVariables()
-    {
-        // Create the variables for the jump to determine the height and fall of the jump
-        float timeToApex = maxJumpTime / 2;
-        gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
-    }
 
     public bool CheckIfGrounded()
     {
-        RaycastHit hit;
-        return Physics.Raycast(groundCheck.position, Vector3.down, out hit, 0.5f, groundLayer);
+        return Physics.CheckSphere(groundCheck.position, 0.4f, groundLayer);
     }
 
     private void OnEnable()

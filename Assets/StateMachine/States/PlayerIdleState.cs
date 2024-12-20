@@ -19,11 +19,6 @@ public class PlayerIdleState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.walkingState);
         }
-
-        if (player.isJumpPressed)
-        {
-            stateMachine.ChangeState(player.jumpingState);
-        }
     }
 
     public override void Exit()

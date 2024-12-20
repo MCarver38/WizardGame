@@ -16,7 +16,6 @@ public class PlayerJumpingState : PlayerInAirState
     public override void Update()
     {
         base.Update();
-        
     }
 
     public override void Exit()
@@ -26,6 +25,6 @@ public class PlayerJumpingState : PlayerInAirState
     
     private void HandleJump()
     {
-        player.currentMovement.y = player.initialJumpVelocity * .5f;
+        player.currentMovement.y = Mathf.Sqrt(player.jumpForce * -2 * player.gravity);
     }
 }

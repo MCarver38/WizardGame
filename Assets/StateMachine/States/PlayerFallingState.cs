@@ -14,11 +14,6 @@ public class PlayerFallingState : PlayerInAirState
     public override void Update()
     {
         base.Update();
-
-        if (player.CheckIfGrounded())
-        {
-            stateMachine.ChangeState(player.idleState);
-        }
     }
 
     public override void Exit()
