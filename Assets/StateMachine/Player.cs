@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class Player : MonoBehaviour
     
     // Jumping variables
     public bool isJumpPressed = false;
+    public bool requireNewJumpPress;
+    public float jumpCooldown = .25f;
+    public float jumpCooldownTimer;
     public float jumpForce = 2f;
     
     // Gravity variables

@@ -15,13 +15,10 @@ public class PlayerInAirState : PlayerState
     public override void Update()
     {
         base.Update();
-
-        if (!player.CheckIfGrounded() || player.currentMovement.y > 0)
-        {
-            player.currentMovement.y += player.gravity;
-            
-            player.characterController.Move(player.currentMovement * Time.deltaTime);
-        }
+        
+        player.currentMovement.y += player.gravity;
+        
+        player.characterController.Move(player.currentMovement * (player.movementSpeed * Time.deltaTime));
         
         if (player.CheckIfGrounded())
         {

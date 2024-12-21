@@ -1,3 +1,4 @@
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class PlayerJumpingState : PlayerInAirState
@@ -10,12 +11,19 @@ public class PlayerJumpingState : PlayerInAirState
     {
         base.Enter();
         
+        player.jumpCooldownTimer = player.jumpCooldown;
+        
        HandleJump();
     }
 
     public override void Update()
     {
         base.Update();
+
+        if (player.characterController.velocity.y < 0.0f)
+        {
+            stateMachine.ChangeState(player.fallingState);
+        }
     }
 
     public override void Exit()
@@ -26,5 +34,6 @@ public class PlayerJumpingState : PlayerInAirState
     private void HandleJump()
     {
         player.currentMovement.y = Mathf.Sqrt(player.jumpForce * -2 * player.gravity);
+        player.requireNewJumpPress = false;
     }
 }

@@ -21,6 +21,8 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
         
+        player.jumpCooldownTimer -= Time.deltaTime;
+        
         HandleRotation();
         player.currentMovement.y = player.groundedGravity;
         
@@ -29,7 +31,7 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.fallingState);
         }
         
-        if (player.isJumpPressed)
+        if (player.isJumpPressed && player.jumpCooldownTimer <= 0 && player.requireNewJumpPress)
         {
             stateMachine.ChangeState(player.jumpingState);
         }
@@ -85,5 +87,6 @@ public class PlayerGroundedState : PlayerState
     {
         // Changes the bool to reflect the players jumping input
         player.isJumpPressed = context.ReadValueAsButton();
+        player.requireNewJumpPress = true;
     }
 }
