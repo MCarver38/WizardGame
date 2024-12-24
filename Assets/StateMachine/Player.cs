@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
     public InputSystem_Actions playerInput;
     public CharacterController characterController;
-    public PlayerStateMachine stateMachine { get; private set; }
+    public Animator animator;
+    private PlayerStateMachine stateMachine { get; set; }
     
     // Creating references to states the player has
     public PlayerIdleState idleState { get; private set; }
@@ -15,22 +15,22 @@ public class Player : MonoBehaviour
     public PlayerFallingState fallingState { get; private set; }
 
     // Store input variables
-    public Vector2 currentMovementInput;
-    public Vector3 currentMovement;
-    public bool isMovementPressed;
-    public bool isRunPressed;
-    public float rotationFactorPerFrame = 15f;
+    [HideInInspector] public Vector2 currentMovementInput;
+    [HideInInspector] public Vector3 currentMovement;
+    [HideInInspector] public bool isMovementPressed;
+    [HideInInspector] public bool isRunPressed;
+    [HideInInspector] public float rotationFactorPerFrame = 15f;
     
     // Jumping variables
-    public bool isJumpPressed = false;
-    public bool requireNewJumpPress;
-    public float jumpCooldown = .25f;
-    public float jumpCooldownTimer;
-    public float jumpForce = 2f;
+    [HideInInspector] public bool isJumpPressed = false;
+    [HideInInspector] public bool requireNewJumpPress;
+    [HideInInspector] public float jumpCooldown = .25f;
+    [HideInInspector] public float jumpCooldownTimer;
+    [HideInInspector] public float jumpForce = 2f;
     
     // Gravity variables
-    public float groundedGravity = -.05f;
-    public float gravity = -9.8f;
+    [HideInInspector] public float groundedGravity = -.05f;
+    [HideInInspector] public float gravity = -9.8f;
 
     // Speed variables
     public float movementSpeed = 7f;
@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
         // Set reference to variables
         playerInput = new InputSystem_Actions();
         characterController = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -65,13 +66,12 @@ public class Player : MonoBehaviour
     {
         // Allows the state machine to update, as it is not a monobehavior script
         stateMachine.currentState.Update();
-        
-        Debug.Log(CheckIfGrounded());
     }
 
     public bool CheckIfGrounded()
     {
-        return Physics.CheckSphere(groundCheck.position, 0.4f, groundLayer);
+        const float groundCheckDistance = 0.1f;
+        return Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
     }
 
     private void OnEnable()

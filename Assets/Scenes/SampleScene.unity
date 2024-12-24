@@ -1138,9 +1138,12 @@ MonoBehaviour:
   isRunPressed: 0
   rotationFactorPerFrame: 15
   isJumpPressed: 0
-  jumpForce: 500
+  requireNewJumpPress: 0
+  jumpCooldown: 0.25
+  jumpCooldownTimer: 0
+  jumpForce: 50
   groundedGravity: -0.05
-  gravity: -0.5
+  gravity: -0.1
   movementSpeed: 7
   sprintSpeed: 10
   groundLayer:

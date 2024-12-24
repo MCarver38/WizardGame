@@ -9,6 +9,8 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        
+        player.animator.SetBool("Idle", true);
     }
 
     public override void Update()
@@ -24,5 +26,7 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
+        
+        player.animator.SetBool("Idle", false);
     }
 }

@@ -9,6 +9,8 @@ public class PlayerWalkingState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        
+        player.animator.SetBool("Walking", true);
     }
 
     public override void Update()
@@ -31,5 +33,7 @@ public class PlayerWalkingState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
+        
+        player.animator.SetBool("Walking", false);
     }
 }
