@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class PlayerInAirState : PlayerState
-{ 
+{
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -18,7 +18,7 @@ public class PlayerInAirState : PlayerState
         
         player.currentMovement.y += player.gravity;
         
-        player.characterController.Move(player.currentMovement * (player.movementSpeed * Time.deltaTime));
+        player.characterController.Move(player.currentMovement * (player.movementSpeed * player.clampedDeltaTime()));
         
         if (player.CheckIfGrounded())
         {

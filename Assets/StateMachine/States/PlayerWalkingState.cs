@@ -17,7 +17,7 @@ public class PlayerWalkingState : PlayerGroundedState
     {
         base.Update();
         
-        player.characterController.Move(player.currentMovement * (player.movementSpeed * Time.deltaTime));
+        player.characterController.Move(player.currentMovement * (player.movementSpeed * player.clampedDeltaTime()));
 
         if (!player.isMovementPressed)
         {

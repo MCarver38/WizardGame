@@ -26,11 +26,11 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool requireNewJumpPress;
     [HideInInspector] public float jumpCooldown = .25f;
     [HideInInspector] public float jumpCooldownTimer;
-    [HideInInspector] public float jumpForce = 2f;
+    public float jumpForce = 2f;
     
     // Gravity variables
-    [HideInInspector] public float groundedGravity = -.05f;
-    [HideInInspector] public float gravity = -9.8f;
+    public float groundedGravity = -.05f;
+    public float gravity = -9.8f;
 
     // Speed variables
     public float movementSpeed = 7f;
@@ -72,6 +72,11 @@ public class Player : MonoBehaviour
     {
         const float groundCheckDistance = 0.1f;
         return Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
+    }
+
+    public float clampedDeltaTime()
+    {
+        return Mathf.Min(Time.deltaTime, 0.0333f);
     }
 
     private void OnEnable()

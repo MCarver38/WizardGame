@@ -62,7 +62,7 @@ public class PlayerGroundedState : PlayerState
         {
             // Creates a rotation based on where the player is currently pressing
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-            player.transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, player.rotationFactorPerFrame * Time.deltaTime);
+            player.transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, player.rotationFactorPerFrame * player.clampedDeltaTime());
         }
     }
     
