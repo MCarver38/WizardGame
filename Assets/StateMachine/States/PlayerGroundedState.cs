@@ -51,9 +51,9 @@ public class PlayerGroundedState : PlayerState
         Vector3 positionToLookAt;
         
         // Store the values of the direction the character should look toward
-        positionToLookAt.x = player.currentMovement.x;
+        positionToLookAt.x = player.relativeMovement.x;
         positionToLookAt.y = 0.0f;
-        positionToLookAt.z = player.currentMovement.z;
+        positionToLookAt.z = player.relativeMovement.z;
         
         // The current rotation of the character
         Quaternion currentRotation = player.transform.rotation;
@@ -62,7 +62,7 @@ public class PlayerGroundedState : PlayerState
         {
             // Creates a rotation based on where the player is currently pressing
             Quaternion targetRotation = Quaternion.LookRotation(positionToLookAt);
-            player.transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, player.rotationFactorPerFrame * player.clampedDeltaTime());
+            player.transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, player.rotationFactorPerFrame * Time.deltaTime);
         }
     }
     

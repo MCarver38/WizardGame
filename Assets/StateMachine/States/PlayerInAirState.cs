@@ -18,7 +18,9 @@ public class PlayerInAirState : PlayerState
         
         player.currentMovement.y += player.gravity;
         
-        player.characterController.Move(player.currentMovement * (player.movementSpeed * player.clampedDeltaTime()));
+        player.relativeMovement = player.GetCameraRelativeVector();
+        
+        player.characterController.Move(player.relativeMovement * (player.movementSpeed * Time.deltaTime));
         
         if (player.CheckIfGrounded())
         {

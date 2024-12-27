@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     // Store input variables
     [HideInInspector] public Vector2 currentMovementInput;
     [HideInInspector] public Vector3 currentMovement;
+    [HideInInspector] public Vector3 relativeMovement;
     [HideInInspector] public bool isMovementPressed;
     [HideInInspector] public bool isRunPressed;
     [HideInInspector] public float rotationFactorPerFrame = 15f;
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
     
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Camera playerCamera;
 
     private void Awake()
     {
@@ -68,15 +70,28 @@ public class Player : MonoBehaviour
         stateMachine.currentState.Update();
     }
 
+    public Vector3 GetCameraRelativeVector()
+    {
+        Vector3 forward = playerCamera.transform.forward;
+        Vector3 right = playerCamera.transform.right;
+        
+        forward.y = 0;
+        right.y = 0;
+        forward.Normalize();
+        
+        Vector3 forwardRelativeVerticalInput = currentMovement.z * forward;
+        Vector3 rightRelativeVerticalInput = currentMovement.x * right;
+        
+        Vector3 rotateToCameraDirection = forwardRelativeVerticalInput + rightRelativeVerticalInput;
+        rotateToCameraDirection.y = currentMovement.y;
+
+        return rotateToCameraDirection;
+    }
+
     public bool CheckIfGrounded()
     {
         const float groundCheckDistance = 0.1f;
         return Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
-    }
-
-    public float clampedDeltaTime()
-    {
-        return Mathf.Min(Time.deltaTime, 0.0333f);
     }
 
     private void OnEnable()

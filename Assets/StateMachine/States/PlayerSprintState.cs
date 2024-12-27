@@ -16,7 +16,9 @@ public class PlayerSprintState : PlayerGroundedState
     {
         base.Update();
         
-        player.characterController.Move(player.currentMovement * (player.sprintSpeed * player.clampedDeltaTime()));
+        player.relativeMovement = player.GetCameraRelativeVector();
+        
+        player.characterController.Move(player.relativeMovement * (player.sprintSpeed * Time.deltaTime));
         
         if (!player.isMovementPressed)
         {

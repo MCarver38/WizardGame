@@ -16,8 +16,10 @@ public class PlayerWalkingState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
+
+        player.relativeMovement = player.GetCameraRelativeVector();
         
-        player.characterController.Move(player.currentMovement * (player.movementSpeed * player.clampedDeltaTime()));
+        player.characterController.Move(player.relativeMovement * (player.movementSpeed * Time.deltaTime));
 
         if (!player.isMovementPressed)
         {
