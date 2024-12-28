@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public PlayerSprintState sprintState { get; private set; }
     public PlayerJumpingState jumpingState { get; private set; }
     public PlayerFallingState fallingState { get; private set; }
+    public PlayerDodgeState dodgeState { get; private set; }
 
     // Store input variables
     [HideInInspector] public Vector2 currentMovementInput;
@@ -37,6 +38,15 @@ public class Player : MonoBehaviour
     public float movementSpeed = 7f;
     public float sprintSpeed = 10f;
     
+    // Dodge variables
+    public float dodgeSpeed = 50f;
+    public float dodgeDuration = 0.2f;
+    public float dodgeDurationTimer;
+    public float dodgeCooldown = 1f;
+    public float dodgeCooldownTimer;
+    public bool isDodgePressed;
+    public bool requireNewDodgePress;
+    
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Camera playerCamera;
@@ -51,6 +61,7 @@ public class Player : MonoBehaviour
         sprintState = new PlayerSprintState(this, stateMachine, "Sprinting");
         jumpingState = new PlayerJumpingState(this, stateMachine, "Jumping");
         fallingState = new PlayerFallingState(this, stateMachine, "Falling");
+        dodgeState = new PlayerDodgeState(this, stateMachine, "Dodge");
         
         // Set reference to variables
         playerInput = new InputSystem_Actions();

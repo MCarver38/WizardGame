@@ -15,6 +15,7 @@ public class PlayerGroundedState : PlayerState
         player.playerInput.CharacterControls.Move.started += OnMovementInput;
         player.playerInput.CharacterControls.Sprint.started += OnSprintInput;
         player.playerInput.CharacterControls.Jump.started += OnJumpInput;
+        player.playerInput.CharacterControls.Dodge.started += OnDodgeInput;
     }
 
     public override void Update()
@@ -22,6 +23,7 @@ public class PlayerGroundedState : PlayerState
         base.Update();
         
         player.jumpCooldownTimer -= Time.deltaTime;
+        player.dodgeCooldownTimer -= Time.deltaTime;
         
         HandleRotation();
         player.currentMovement.y = player.groundedGravity;
@@ -34,6 +36,11 @@ public class PlayerGroundedState : PlayerState
         if (player.isJumpPressed && player.jumpCooldownTimer <= 0 && player.requireNewJumpPress)
         {
             stateMachine.ChangeState(player.jumpingState);
+        }
+
+        if (player.isDodgePressed && player.dodgeCooldownTimer <= 0 && player.requireNewDodgePress)
+        {
+            stateMachine.ChangeState(player.dodgeState);
         }
     }
 
@@ -88,5 +95,11 @@ public class PlayerGroundedState : PlayerState
         // Changes the bool to reflect the players jumping input
         player.isJumpPressed = context.ReadValueAsButton();
         player.requireNewJumpPress = true;
+    }
+
+    private void OnDodgeInput(InputAction.CallbackContext context)
+    {
+        player.isDodgePressed = context.ReadValueAsButton();
+        player.requireNewDodgePress = true;
     }
 }
