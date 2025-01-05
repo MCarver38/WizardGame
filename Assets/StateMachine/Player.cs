@@ -50,6 +50,8 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Camera playerCamera;
+    [SerializeField] private ParticleSystem dodgeParticles;
+    public GameObject characterVisuals;
 
     private void Awake()
     {
@@ -103,6 +105,11 @@ public class Player : MonoBehaviour
     {
         const float groundCheckDistance = 0.1f;
         return Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
+    }
+
+    public void StartDodgeBlink()
+    {
+        dodgeParticles.Play();
     }
 
     private void OnEnable()

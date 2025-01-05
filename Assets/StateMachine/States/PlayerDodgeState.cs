@@ -9,6 +9,10 @@ public class PlayerDodgeState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        
+        player.StartDodgeBlink();
+        
+        player.characterVisuals.SetActive(false);
 
         player.dodgeCooldownTimer = player.dodgeCooldown;
         player.dodgeDurationTimer = player.dodgeDuration;
@@ -31,6 +35,8 @@ public class PlayerDodgeState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
+        
+        player.characterVisuals.SetActive(true);
         
         player.dodgeDurationTimer = player.dodgeDuration;
     }
