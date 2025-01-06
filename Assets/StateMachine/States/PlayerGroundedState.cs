@@ -38,7 +38,7 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.jumpingState);
         }
 
-        if (player.isDodgePressed && player.dodgeCooldownTimer <= 0 && player.requireNewDodgePress)
+        if (player.isDodgePressed && player.dodgeCooldownTimer <= 0 && player.requireNewDodgePress && player.mana.IsEnoughManaToUse(player.dodgeManaAmount))
         {
             stateMachine.ChangeState(player.dodgeState);
         }

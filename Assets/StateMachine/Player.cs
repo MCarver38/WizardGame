@@ -28,29 +28,31 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool requireNewJumpPress;
     [HideInInspector] public float jumpCooldown = .25f;
     [HideInInspector] public float jumpCooldownTimer;
-    public float jumpForce = 2f;
+    [HideInInspector] public float jumpForce = 2f;
     
     // Gravity variables
-    public float groundedGravity = -.05f;
-    public float gravity = -9.8f;
+    [HideInInspector] public float groundedGravity = -.05f;
+    [HideInInspector] public float gravity = -9.8f;
 
     // Speed variables
-    public float movementSpeed = 7f;
-    public float sprintSpeed = 10f;
+    [HideInInspector] public float movementSpeed = 7f;
+    [HideInInspector] public float sprintSpeed = 10f;
     
     // Dodge variables
-    public float dodgeSpeed = 50f;
-    public float dodgeDuration = 0.2f;
-    public float dodgeDurationTimer;
-    public float dodgeCooldown = 1f;
-    public float dodgeCooldownTimer;
-    public bool isDodgePressed;
-    public bool requireNewDodgePress;
+    [HideInInspector] public float dodgeSpeed = 50f;
+    [HideInInspector] public float dodgeDuration = 0.2f;
+    [HideInInspector] public float dodgeDurationTimer;
+    [HideInInspector] public float dodgeCooldown = 1f;
+    [HideInInspector] public float dodgeCooldownTimer;
+    [HideInInspector] public bool isDodgePressed;
+    [HideInInspector] public bool requireNewDodgePress;
+    [HideInInspector] public int dodgeManaAmount = 5;
     
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private ParticleSystem dodgeParticles;
+    public Mana mana;
     public GameObject characterVisuals;
 
     private void Awake()
@@ -69,6 +71,7 @@ public class Player : MonoBehaviour
         playerInput = new InputSystem_Actions();
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
+        mana = GetComponent<Mana>();
     }
 
     private void Start()

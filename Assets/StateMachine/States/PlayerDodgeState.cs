@@ -11,6 +11,7 @@ public class PlayerDodgeState : PlayerGroundedState
         base.Enter();
         
         player.StartDodgeBlink();
+        player.mana.UseMana(player.dodgeManaAmount);
         
         player.characterVisuals.SetActive(false);
 
