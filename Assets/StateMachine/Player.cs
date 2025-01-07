@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     public PlayerJumpingState jumpingState { get; private set; }
     public PlayerFallingState fallingState { get; private set; }
     public PlayerDodgeState dodgeState { get; private set; }
+    public PlayerNPCInteractState npcInteractState { get; private set; }
 
     // Store input variables
     [HideInInspector] public Vector2 currentMovementInput;
@@ -57,9 +59,12 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask interactableLayers;
     [SerializeField] private GameObject interactUI;
     [SerializeField] private TextMeshProUGUI interactUIText;
-    
+
+    public DialogueManager dialogueManager;
+    public GameObject dialogueBox;
     public Mana mana;
     public GameObject characterVisuals;
+    public bool requireNewInteractPress;
 
     private const float interactRange = 2f;
     private GameObject currentNearbyObject;
@@ -76,6 +81,7 @@ public class Player : MonoBehaviour
         jumpingState = new PlayerJumpingState(this, stateMachine, "Jumping");
         fallingState = new PlayerFallingState(this, stateMachine, "Falling");
         dodgeState = new PlayerDodgeState(this, stateMachine, "Dodge");
+        npcInteractState = new PlayerNPCInteractState(this, stateMachine, "Idle");
         
         // Set reference to variables
         playerInput = new InputSystem_Actions();
@@ -123,6 +129,7 @@ public class Player : MonoBehaviour
     
     public void Interact()
     {
+        requireNewInteractPress = false;
         Collider[] hits = Physics.OverlapSphere(transform.position, interactRange, interactableLayers);
         
         Collider closestHit = null;
@@ -197,7 +204,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ShowInteractUI()
+    public void ShowInteractUI()
     {
         IInteractable interactable = currentNearbyObject.GetComponent<IInteractable>();
         string currentText = interactable?.GetInteractionPrompt();
@@ -205,7 +212,7 @@ public class Player : MonoBehaviour
         interactUI.SetActive(true);
     }
     
-    private void HideInteractUI()
+    public void HideInteractUI()
     {
         interactUI.SetActive(false);
     }

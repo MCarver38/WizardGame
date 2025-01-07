@@ -44,9 +44,10 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.dodgeState);
         }
 
-        if (player.isInteractPressed)
+        if (player.isInteractPressed && player.requireNewInteractPress)
         {
             player.Interact();
+            stateMachine.ChangeState(player.npcInteractState);
         }
     }
 
@@ -114,5 +115,6 @@ public class PlayerGroundedState : PlayerState
     private void OnInteractInput(InputAction.CallbackContext context)
     {
         player.isInteractPressed = context.ReadValueAsButton();
+        player.requireNewInteractPress = true;
     }
 }
