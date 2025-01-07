@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
 
     private const float interactRange = 2f;
     private GameObject currentNearbyObject;
+    private OutlineMaterialScript currentHighlight;
 
     private void Awake()
     {
@@ -153,17 +154,33 @@ public class Player : MonoBehaviour
         Collider[] hits = Physics.OverlapSphere(transform.position, interactRange, interactableLayers);
         Collider closestHit = null;
         var closestDistance = float.MaxValue;
+        OutlineMaterialScript closestOutline = null;
 
         foreach (var hit in hits)
         {
+            OutlineMaterialScript highlight = hit.GetComponent<OutlineMaterialScript>();
             float distance = Vector3.Distance(transform.position, hit.transform.position);
+            
             if (distance < closestDistance)
             {
                 closestDistance = distance;
                 closestHit = hit;
+                closestOutline = highlight;
             }
         }
 
+        if (currentHighlight != null && currentHighlight != closestOutline)
+        {
+            currentHighlight.RemoveOutlineMaterial();
+        }
+        
+        currentHighlight = closestOutline;
+
+        if (currentHighlight != null)
+        {
+            currentHighlight.ApplyOutlineMaterial();
+        }
+        
         if (closestHit != null)
         {
             if (currentNearbyObject != closestHit.gameObject)
@@ -175,6 +192,7 @@ public class Player : MonoBehaviour
         else
         {
             currentNearbyObject = null;
+            currentHighlight = null;
             HideInteractUI();
         }
     }
