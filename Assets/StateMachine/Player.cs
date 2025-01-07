@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -22,9 +23,10 @@ public class Player : MonoBehaviour
     [HideInInspector] public bool isMovementPressed;
     [HideInInspector] public bool isRunPressed;
     [HideInInspector] public float rotationFactorPerFrame = 15f;
+    [HideInInspector] public bool isInteractPressed;
     
     // Jumping variables
-    [HideInInspector] public bool isJumpPressed = false;
+    [HideInInspector] public bool isJumpPressed;
     [HideInInspector] public bool requireNewJumpPress;
     [HideInInspector] public float jumpCooldown = .25f;
     [HideInInspector] public float jumpCooldownTimer;
@@ -52,8 +54,15 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private ParticleSystem dodgeParticles;
+    [SerializeField] private LayerMask interactableLayers;
+    [SerializeField] private GameObject interactUI;
+    [SerializeField] private TextMeshProUGUI interactUIText;
+    
     public Mana mana;
     public GameObject characterVisuals;
+
+    private const float interactRange = 2f;
+    private GameObject currentNearbyObject;
 
     private void Awake()
     {
@@ -84,6 +93,7 @@ public class Player : MonoBehaviour
     {
         // Allows the state machine to update, as it is not a monobehavior script
         stateMachine.currentState.Update();
+        CheckForNearbyInteractables();
     }
 
     public Vector3 GetCameraRelativeVector()
@@ -108,6 +118,78 @@ public class Player : MonoBehaviour
     {
         const float groundCheckDistance = 0.1f;
         return Physics.Raycast(groundCheck.position, Vector3.down, groundCheckDistance, groundLayer);
+    }
+    
+    public void Interact()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange, interactableLayers);
+        
+        Collider closestHit = null;
+        var closestDistance = float.MaxValue;
+
+        foreach (var hit in hits)
+        {
+            var distance = Vector3.Distance(transform.position, hit.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestHit = hit;
+            }
+        }
+
+        if (closestHit != null)
+        {
+            IInteractable interactable = closestHit.GetComponent<IInteractable>();
+            interactable?.Interact();
+        }
+        else
+        {
+            Debug.Log("Nothing to interact with");
+        }
+    }
+
+    private void CheckForNearbyInteractables()
+    {
+        Collider[] hits = Physics.OverlapSphere(transform.position, interactRange, interactableLayers);
+        Collider closestHit = null;
+        var closestDistance = float.MaxValue;
+
+        foreach (var hit in hits)
+        {
+            float distance = Vector3.Distance(transform.position, hit.transform.position);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestHit = hit;
+            }
+        }
+
+        if (closestHit != null)
+        {
+            if (currentNearbyObject != closestHit.gameObject)
+            {
+                currentNearbyObject = closestHit.gameObject;
+                ShowInteractUI();
+            }
+        }
+        else
+        {
+            currentNearbyObject = null;
+            HideInteractUI();
+        }
+    }
+
+    private void ShowInteractUI()
+    {
+        IInteractable interactable = currentNearbyObject.GetComponent<IInteractable>();
+        string currentText = interactable?.GetInteractionPrompt();
+        interactUIText.text = currentText;
+        interactUI.SetActive(true);
+    }
+    
+    private void HideInteractUI()
+    {
+        interactUI.SetActive(false);
     }
 
     public void StartDodgeBlink()

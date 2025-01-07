@@ -16,6 +16,7 @@ public class PlayerGroundedState : PlayerState
         player.playerInput.CharacterControls.Sprint.started += OnSprintInput;
         player.playerInput.CharacterControls.Jump.started += OnJumpInput;
         player.playerInput.CharacterControls.Dodge.started += OnDodgeInput;
+        player.playerInput.CharacterControls.Interact.started += OnInteractInput;
     }
 
     public override void Update()
@@ -42,6 +43,11 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.dodgeState);
         }
+
+        if (player.isInteractPressed)
+        {
+            player.Interact();
+        }
     }
 
     public override void Exit()
@@ -51,6 +57,8 @@ public class PlayerGroundedState : PlayerState
         player.playerInput.CharacterControls.Move.canceled += OnMovementInput;
         player.playerInput.CharacterControls.Sprint.canceled += OnSprintInput;
         player.playerInput.CharacterControls.Jump.canceled += OnJumpInput;
+        player.playerInput.CharacterControls.Dodge.canceled += OnDodgeInput;
+        player.playerInput.CharacterControls.Interact.canceled += OnInteractInput;
     }
 
     private void HandleRotation()
@@ -101,5 +109,10 @@ public class PlayerGroundedState : PlayerState
     {
         player.isDodgePressed = context.ReadValueAsButton();
         player.requireNewDodgePress = true;
+    }
+    
+    private void OnInteractInput(InputAction.CallbackContext context)
+    {
+        player.isInteractPressed = context.ReadValueAsButton();
     }
 }
