@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,11 +14,14 @@ public class DialogueManager : MonoBehaviour
     private DialogueNode currentNode;
     private int currentLineIndex;
 
+    public static event Action OnDialogueEnd;
+
     public void StartDialogue(DialogueNode startingNode)
     {
         currentNode = startingNode;
         currentLineIndex = 0;
         DisplayCurrentLine();
+        DisplayChoices();
     }
 
     private void DisplayCurrentLine()
@@ -45,7 +49,7 @@ public class DialogueManager : MonoBehaviour
         foreach (var choice in currentNode.choices)
         {
             var button = Instantiate(choicePrefabButton, choiceContainer.transform);
-            button.GetComponentInChildren<Text>().text = choice.choiceText;
+            button.GetComponentInChildren<TextMeshProUGUI>().text = choice.choiceText;
             button.onClick.AddListener(() => OnChoiceSelected(choice.nextNode));
         }
     }
@@ -70,13 +74,6 @@ public class DialogueManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && currentNode != null && currentLineIndex < currentNode.lines.Count)
-        {
-            DisplayCurrentLine();
-        }
+        OnDialogueEnd?.Invoke();
     }
 }

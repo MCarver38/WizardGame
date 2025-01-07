@@ -15,4 +15,6 @@ MonoBehaviour:
   lines:
   - speaker: TestNPC
     text: I'm sorry to hear that, but I have to go, goodbye
-  choices: []
+  choices:
+  - choiceText: Goodbye
+    nextNode: {fileID: 0}

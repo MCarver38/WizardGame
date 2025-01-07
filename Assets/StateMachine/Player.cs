@@ -88,6 +88,8 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         mana = GetComponent<Mana>();
+
+        DialogueManager.OnDialogueEnd += OnDialogueEnd;
     }
 
     private void Start()
@@ -220,6 +222,11 @@ public class Player : MonoBehaviour
     public void StartDodgeBlink()
     {
         dodgeParticles.Play();
+    }
+
+    public void OnDialogueEnd()
+    {
+        stateMachine.ChangeState(idleState);
     }
 
     private void OnEnable()

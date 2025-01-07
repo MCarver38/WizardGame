@@ -4,9 +4,11 @@ public class TestNPC : MonoBehaviour, IInteractable
 {
     [SerializeField] private string npcName;
     [SerializeField] private DialogueNode startingNode;
+    [SerializeField] private DialogueManager dialogueManager;
+    
     public void Interact()
     {
-        Debug.Log($"Talking to {npcName}");
+        TriggerDialogue(dialogueManager);
     }
 
     public string GetInteractionPrompt()

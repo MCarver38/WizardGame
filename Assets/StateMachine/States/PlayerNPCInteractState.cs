@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class PlayerNPCInteractState : PlayerState
 {
     public PlayerNPCInteractState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
