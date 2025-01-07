@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
         // Creating states for the state machine to be used
         idleState = new PlayerIdleState(this, stateMachine, "Idle");
         walkingState = new PlayerWalkingState(this, stateMachine, "Walking");
-        sprintState = new PlayerSprintState(this, stateMachine, "Sprinting");
+        sprintState = new PlayerSprintState(this, stateMachine, "Walking");
         jumpingState = new PlayerJumpingState(this, stateMachine, "Jumping");
         fallingState = new PlayerFallingState(this, stateMachine, "Falling");
         dodgeState = new PlayerDodgeState(this, stateMachine, "Dodge");
