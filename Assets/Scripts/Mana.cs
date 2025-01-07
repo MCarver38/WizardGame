@@ -10,7 +10,7 @@ public class Mana : MonoBehaviour
     [SerializeField] private float regenDelay = 2f;
     
     public int currentMana;
-    private bool isRegenerating = false;
+    private Coroutine manaRegenCoroutine;
 
     public UnityEvent<int, int> OnManaChanged; // Current and max mana
 
@@ -24,17 +24,23 @@ public class Mana : MonoBehaviour
         currentMana = Mathf.Clamp(currentMana - amount, 0, maxMana);
         OnManaChanged?.Invoke(currentMana, maxMana);
 
-        if (!isRegenerating)
+        RestartManaRegeneration();
+    }
+
+    private void RestartManaRegeneration()
+    {
+        // Stop the current coroutine if it's running
+        if (manaRegenCoroutine != null)
         {
-            StopCoroutine(RegenerateMana());
-            StartCoroutine(RegenerateMana());
+            StopCoroutine(manaRegenCoroutine);
         }
+
+        // Start the coroutine anew
+        manaRegenCoroutine = StartCoroutine(RegenerateMana());
     }
 
     private IEnumerator RegenerateMana()
     {
-        isRegenerating = true;
-        
         yield return new WaitForSeconds(regenDelay);
 
         while (currentMana < maxMana)
@@ -47,7 +53,7 @@ public class Mana : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         
-        isRegenerating = false;
+        manaRegenCoroutine = null;
     }
 
     public void GainMana(int amount)
