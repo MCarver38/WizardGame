@@ -49,7 +49,11 @@ public class PlayerGroundedState : PlayerState
         if (player.isInteractPressed && player.requireNewInteractPress)
         {
             player.Interact();
-            stateMachine.ChangeState(player.npcInteractState);
+            
+            if (player.currentNearbyObject.CompareTag("InteractNPC"))
+            {
+                stateMachine.ChangeState(player.npcInteractState);
+            }
         }
     }
 

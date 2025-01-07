@@ -14,11 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - speaker: TestNPC
-    text: This is test dialogue.
-  - speaker: TestNPC
     text: How are you?
   choices:
-  - choiceText: I'm good, how are you?
+  - choiceText: I'm good
     nextNode: {fileID: 11400000, guid: d8c5a570acbfef5469e5f7a62683d2ef, type: 2}
   - choiceText: I'm terrible
     nextNode: {fileID: 11400000, guid: 7ed55b06aa8742848b263f00926842ef, type: 2}

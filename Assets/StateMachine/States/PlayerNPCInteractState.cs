@@ -7,7 +7,8 @@ public class PlayerNPCInteractState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        
+
+        player.freeLookCamera.enabled = false;
         player.animator.SetBool("Idle", true);
         player.dialogueBox.SetActive(true);
         player.HideInteractUI();
@@ -22,6 +23,7 @@ public class PlayerNPCInteractState : PlayerState
     {
         base.Exit();
         
+        player.freeLookCamera.enabled = true;
         player.animator.SetBool("Idle", false);
         player.dialogueBox.SetActive(false);
         player.ShowInteractUI();

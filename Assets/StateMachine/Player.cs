@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -59,15 +60,15 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask interactableLayers;
     [SerializeField] private GameObject interactUI;
     [SerializeField] private TextMeshProUGUI interactUIText;
-
-    public DialogueManager dialogueManager;
+    
     public GameObject dialogueBox;
     public Mana mana;
     public GameObject characterVisuals;
     public bool requireNewInteractPress;
+    public CinemachineCamera freeLookCamera;
 
     private const float interactRange = 2f;
-    private GameObject currentNearbyObject;
+    public GameObject currentNearbyObject;
     private OutlineMaterialScript currentHighlight;
 
     private void Awake()
