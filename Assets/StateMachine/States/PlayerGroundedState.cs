@@ -50,7 +50,7 @@ public class PlayerGroundedState : PlayerState
         {
             player.Interact();
             
-            if (player.currentNearbyObject.CompareTag("InteractNPC"))
+            if (player.currentNearbyObject != null && player.currentNearbyObject.CompareTag("InteractNPC"))
             {
                 stateMachine.ChangeState(player.npcInteractState);
             }
