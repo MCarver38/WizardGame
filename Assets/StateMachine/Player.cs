@@ -131,7 +131,7 @@ public class Player : MonoBehaviour
     }
     
     public void Interact()
-    {
+    { 
         requireNewInteractPress = false;
         Collider[] hits = Physics.OverlapSphere(transform.position, interactRange, interactableLayers);
         
