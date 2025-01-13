@@ -2253,6 +2253,7 @@ GameObject:
   - component: {fileID: 552383638}
   - component: {fileID: 552383639}
   - component: {fileID: 552383640}
+  - component: {fileID: 552383641}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -2397,6 +2398,20 @@ MonoBehaviour:
   OnManaChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &552383641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 552383635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c4f09b01132e6e4db0a927e9b85db6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySlots: []
+  maxSlots: 30
 --- !u!1 &644963416
 GameObject:
   m_ObjectHideFlags: 0

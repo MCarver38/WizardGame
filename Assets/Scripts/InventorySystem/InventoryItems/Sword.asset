@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c68756cb7e4c70445aecaa2e65fe72b7, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  itemName: 
-  icon: {fileID: 0}
-  description: 
-  maxStackSize: 0
+  itemName: TestSword
+  icon: {fileID: 21300000, guid: 64641050e621ee24fa7c1be7f000d2aa, type: 3}
+  description: This is a test sword.
+  maxStackSize: 1
