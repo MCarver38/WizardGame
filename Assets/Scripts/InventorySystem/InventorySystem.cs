@@ -6,28 +6,37 @@ public class InventorySystem : MonoBehaviour
     public List<InventorySlot> inventorySlots = new List<InventorySlot>();
     public int maxSlots = 30;
 
-    public bool AddItem(ItemInstance item, int quantity, ItemData itemData)
+    private void OnEnable()
+    {
+        Item.OnItemCollected += AddItem;
+    }
+    
+    public void AddItem(Item item)
     {
         foreach (var slot in inventorySlots)
         {
-            if (slot.quantity < itemData.maxStackSize)
+            if (slot.quantity < item.itemMaxStackSize)
             {
-                int spaceLeft = itemData.maxStackSize - slot.quantity;
-                int toAdd = Mathf.Min(spaceLeft, quantity);
+                int spaceLeft = item.itemMaxStackSize - slot.quantity;
+                int toAdd = Mathf.Min(spaceLeft, item.quantity);
                 slot.quantity += toAdd;
-                quantity -= toAdd;
+                item.quantity -= toAdd;
 
-                if (quantity <= 0) return true;
+                if (item.quantity <= 0) return;
             }
         }
 
         if (inventorySlots.Count < maxSlots)
         {
-            int toAdd = Mathf.Min(itemData.maxStackSize, quantity);
-            inventorySlots.Add(new InventorySlot(item, toAdd));
-            quantity -= toAdd;
+            int toAdd = Mathf.Min(item.itemMaxStackSize, item.quantity);
+            inventorySlots.Add(new InventorySlot(item.itemInstance, toAdd));
+            item.quantity -= toAdd;
         }
 
-        return quantity == 0;
+        if (item.quantity > 0)
+        {
+            Debug.Log($"Not enough space for item: {item.name}");
+        }
     }
+    
 }

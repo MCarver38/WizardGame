@@ -1,10 +1,10 @@
-using UnityEngine;
-
 [System.Serializable]
 public class ItemInstance
 {
-    public ItemData itemType;
+    public enum Elements { fire, water, ice, air }
+    public enum Rarity { common, uncommon, rare, epic }
+    
     public int damageAmount;
-    public int rarity;
-    public int elementType;
+    public Rarity rarity;
+    public Elements elementType;
 }

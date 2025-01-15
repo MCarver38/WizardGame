@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public class TestCollectible : MonoBehaviour, IInteractable
+public class TestCollectible : Item, IInteractable
 {
     [SerializeField] private string collectibleName;
+    [SerializeField] private ScriptableObject collectibleObject;
     
-    public void Interact()
+    public override void Interact()
     {
         Debug.Log($"Picked up {collectibleName}");
         Destroy(gameObject);
+        
+        CollectItem();
     }
 
     public string GetInteractionPrompt()
