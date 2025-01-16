@@ -19,6 +19,7 @@ public class PlayerGroundedState : PlayerState
         player.playerInput.CharacterControls.Jump.started += OnJumpInput;
         player.playerInput.CharacterControls.Dodge.started += OnDodgeInput;
         player.playerInput.CharacterControls.Interact.started += OnInteractInput;
+        player.playerInput.CharacterControls.Inventory.started += OnInventoryInput;
     }
 
     public override void Update()
@@ -55,6 +56,11 @@ public class PlayerGroundedState : PlayerState
                 stateMachine.ChangeState(player.npcInteractState);
             }
         }
+
+        if (player.isInventoryButtonPressed && player.requireNewInventoryPress)
+        {
+            stateMachine.ChangeState(player.inventoryState);
+        }
     }
 
     public override void Exit()
@@ -66,6 +72,7 @@ public class PlayerGroundedState : PlayerState
         player.playerInput.CharacterControls.Jump.canceled += OnJumpInput;
         player.playerInput.CharacterControls.Dodge.canceled += OnDodgeInput;
         player.playerInput.CharacterControls.Interact.canceled += OnInteractInput;
+        player.playerInput.CharacterControls.Inventory.canceled += OnInventoryInput;
     }
 
     private void HandleRotation()
@@ -122,5 +129,11 @@ public class PlayerGroundedState : PlayerState
     {
         player.isInteractPressed = context.ReadValueAsButton();
         player.requireNewInteractPress = true;
+    }
+
+    private void OnInventoryInput(InputAction.CallbackContext context)
+    {
+        player.isInventoryButtonPressed = context.ReadValueAsButton();
+        player.requireNewInventoryPress = true;
     }
 }

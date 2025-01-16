@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     public PlayerFallingState fallingState { get; private set; }
     public PlayerDodgeState dodgeState { get; private set; }
     public PlayerNPCInteractState npcInteractState { get; private set; }
+    public PlayerInventoryState inventoryState { get; private set; }
 
     // Store input variables
     [HideInInspector] public Vector2 currentMovementInput;
@@ -60,8 +61,13 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask interactableLayers;
     [SerializeField] private GameObject interactUI;
     [SerializeField] private TextMeshProUGUI interactUIText;
+
+    public bool isInventoryButtonPressed;
+    public bool requireNewInventoryPress;
+    public bool isInventoryScreenOpen;
     
     public GameObject dialogueBox;
+    public GameObject inventoryScreen;
     public Mana mana;
     public GameObject characterVisuals;
     public bool requireNewInteractPress;
@@ -83,6 +89,7 @@ public class Player : MonoBehaviour
         fallingState = new PlayerFallingState(this, stateMachine, "Falling");
         dodgeState = new PlayerDodgeState(this, stateMachine, "Dodge");
         npcInteractState = new PlayerNPCInteractState(this, stateMachine, "Idle");
+        inventoryState = new PlayerInventoryState(this, stateMachine, "Idle");
         
         // Set reference to variables
         playerInput = new InputSystem_Actions();

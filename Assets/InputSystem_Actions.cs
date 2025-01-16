@@ -116,6 +116,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""d02bc37c-c8aa-4e2a-b02d-a97d73f4879b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -468,6 +477,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""489f03a4-a239-4d3b-8738-e7ef2d1eae1d"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c5bab73-a3b6-4882-8720-2c31426a9f46"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1065,6 +1096,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_CharacterControls_Next = m_CharacterControls.FindAction("Next", throwIfNotFound: true);
         m_CharacterControls_Sprint = m_CharacterControls.FindAction("Sprint", throwIfNotFound: true);
         m_CharacterControls_Dodge = m_CharacterControls.FindAction("Dodge", throwIfNotFound: true);
+        m_CharacterControls_Inventory = m_CharacterControls.FindAction("Inventory", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1154,6 +1186,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Next;
     private readonly InputAction m_CharacterControls_Sprint;
     private readonly InputAction m_CharacterControls_Dodge;
+    private readonly InputAction m_CharacterControls_Inventory;
     public struct CharacterControlsActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -1168,6 +1201,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Next => m_Wrapper.m_CharacterControls_Next;
         public InputAction @Sprint => m_Wrapper.m_CharacterControls_Sprint;
         public InputAction @Dodge => m_Wrapper.m_CharacterControls_Dodge;
+        public InputAction @Inventory => m_Wrapper.m_CharacterControls_Inventory;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1207,6 +1241,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
         }
 
         private void UnregisterCallbacks(ICharacterControlsActions instance)
@@ -1241,6 +1278,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
         }
 
         public void RemoveCallbacks(ICharacterControlsActions instance)
@@ -1433,6 +1473,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnNext(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnInventory(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

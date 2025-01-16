@@ -3,12 +3,12 @@ using UnityEngine;
 [System.Serializable]
 public class InventorySlot
 {
-    public ItemInstance Item;
+    public ItemData itemData;
     public int quantity;
 
-    public InventorySlot(ItemInstance data, int qty)
+    public InventorySlot(ItemData data, int qty)
     {
-        Item = data;
+        itemData = data;
         quantity = qty;
     }
 }

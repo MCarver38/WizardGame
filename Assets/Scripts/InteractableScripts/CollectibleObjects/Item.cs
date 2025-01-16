@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
-    [SerializeField] private ItemData itemData;
+    public ItemData itemData;
     
     public string itemName;
     public string itemDescription;
