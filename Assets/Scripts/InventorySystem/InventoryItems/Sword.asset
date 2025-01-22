@@ -17,7 +17,7 @@ MonoBehaviour:
     rarity: 0
     elementType: 0
   itemName: TestSword
-  icon: {fileID: 21300000, guid: 64641050e621ee24fa7c1be7f000d2aa, type: 3}
+  icon: {fileID: 21300000, guid: 609460c7156de844590b1bad895ac4b6, type: 3}
   description: This is a test sword.
   maxStackSize: 1
   quantity: 1
